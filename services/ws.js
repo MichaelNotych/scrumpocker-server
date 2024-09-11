@@ -26,7 +26,6 @@ const webSocketHandler = (io, socket) => {
 
 	socket.on('vote', async ({roomId, userId, voteValue}) => {
 		const existedVote = await getUserVoteInRoom(userId, roomId);
-		console.log('existedVote', existedVote)
 		if (!existedVote) {
 			await createVote(voteValue, roomId, userId);
 		} else {
