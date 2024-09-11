@@ -1,3 +1,4 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
 
@@ -24,14 +25,14 @@ const generateJWT = (roomId, userId) => {
 			roomId,
 			userId,
 		},
-		"my-secret-key", {
+		process.env.JWT_SECRET, {
 			expiresIn: '1h'
 		}
 	);
 };
 
 const validateToken = (token) => {
-	return jwt.verify(token, "my-secret-key")
+	return jwt.verify(token, process.env.JWT_SECRET)
 }
 
 module.exports = { createUser, getRoomUsers, getUser, generateJWT, validateToken };

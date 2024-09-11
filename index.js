@@ -5,7 +5,7 @@ const http = require("http");
 const roomRouter = require("./routes/room");
 const userRouter = require("./routes/user");
 const verifyToken = require("./middleware/auth");
-require('dotenv').config() 
+require('dotenv').config();
 const { Server } = require("socket.io");
 const { webSocketMiddleWare, webSocketHandler } = require("./services/ws");
 
