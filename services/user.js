@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
 
@@ -11,13 +11,17 @@ const createUser = async (name, roomId) => {
 	return user;
 };
 
+const deleteUser = async (userId) => {
+	await User.findByIdAndDelete(userId);
+};
+
 const getRoomUsers = async (roomId) => {
-	return User.find({room: roomId})
+	return User.find({ room: roomId });
 };
 
 const getUser = async (userId) => {
-	return User.findById(userId)
-}
+	return User.findById(userId);
+};
 
 const generateJWT = (roomId, userId) => {
 	return jwt.sign(
@@ -25,14 +29,22 @@ const generateJWT = (roomId, userId) => {
 			roomId,
 			userId,
 		},
-		process.env.JWT_SECRET, {
-			expiresIn: '1h'
+		process.env.JWT_SECRET,
+		{
+			expiresIn: "1h",
 		}
 	);
 };
 
 const validateToken = (token) => {
-	return jwt.verify(token, process.env.JWT_SECRET)
-}
+	return jwt.verify(token, process.env.JWT_SECRET);
+};
 
-module.exports = { createUser, getRoomUsers, getUser, generateJWT, validateToken };
+module.exports = {
+	createUser,
+	deleteUser,
+	getRoomUsers,
+	getUser,
+	generateJWT,
+	validateToken,
+};

@@ -9,9 +9,11 @@ const createRoom = async (name, password) => {
 		number: generateRoomNumber(),
 	});
 
-	console.log('room', room)
-
 	return parseRoomForClient(room);
+};
+
+const deleteRoom = async (roomId) => {
+	await Room.findByIdAndDelete(roomId);
 };
 
 const generateRoomNumber = () => Math.random().toString().slice(2, 8);
@@ -24,13 +26,18 @@ const parseRoomForClient = (room) => {
 };
 
 const getRoomById = async (roomId) => {
-	const room = await Room.findById(roomId);
+	let room = null;
+	try {
+		room = await Room.findById(roomId);
+	} catch (error) {
+		console.log(`can't find room with id: ${roomId}`);
+	}
 
 	return parseRoomForClient(room);
 };
 
 const getRoomByNumber = async (roomNumber) => {
-	const room = await Room.findOne({number: roomNumber * 1})
+	const room = await Room.findOne({ number: roomNumber * 1 });
 
 	return room;
 };
@@ -41,6 +48,7 @@ const checkRoomPassword = async (room, roomPassword) => {
 
 module.exports = {
 	createRoom,
+	deleteRoom,
 	getRoomById,
 	getRoomByNumber,
 	checkRoomPassword,

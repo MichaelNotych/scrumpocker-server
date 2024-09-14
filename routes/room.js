@@ -28,7 +28,6 @@ roomRouter.post("/join", async (req, res) => {
 			error: 'Invalid credentials (1)'
 		});
 	}
-	console.log('login', room, roomPassword)
 	const passwordIsCorrect = await checkRoomPassword(room, roomPassword);
 	if (!passwordIsCorrect) {
 		return res.status(401).json({
